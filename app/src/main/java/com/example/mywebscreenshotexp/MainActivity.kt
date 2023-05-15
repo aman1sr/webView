@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         initialProgressBar?.setCancelable(false)
         initialProgressBar?.show()
 
+        // swipe refresh to reLoad the website
         _binding?.swipeRefreshLayout?.setOnRefreshListener {
             _binding?.chatWebView?.reload()
         }
@@ -75,6 +76,8 @@ class MainActivity : AppCompatActivity() {
                     innerPageProgressBar?.show()
                 }
 
+                // todo: not working!!
+                // to remove specific section of website
                 _binding?.chatWebView?.evaluateJavascript(
                     "(function() { " +
                             "   var section = document.querySelector('.navbar-header');" +
@@ -128,23 +131,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    // todo: how?
-    fun hideSection() {
-        val jsCode = """
-        |javascript:(function() {
-        |   var section = document.querySelector('.navbar-header');
-        |   if (section) {
-        |       section.style.display = "none";
-        |   }
-        |})();
-    """.trimMargin()
 
-        _binding?.chatWebView?.evaluateJavascript(jsCode, null)
-    }
-
-
-
-
+/* tracks the backStack of screens, rather navigation home screen */
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (event?.action == KeyEvent.ACTION_DOWN) {
             when (keyCode) {
